@@ -1,0 +1,11 @@
+- name: Print out the loop info
+  debug:
+    msg: "{{ item }}"
+  loop:
+    - Loop item 1
+    - Loop item 2
+    - Loop item 3
+
+- name: Print out some other info
+  debug:
+    msg: "{{ other_info | default('Nothing to report') }}"

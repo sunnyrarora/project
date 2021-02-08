@@ -1,0 +1,11 @@
+---
+- name: Play tat has outer and inner loop
+  hosts: localhost
+  tasks:
+    - include_tasks: tasks/loop_task.yml
+      loop:
+        - susan
+        - joe
+        - james
+      loop_control:
+        loop_var: other_info

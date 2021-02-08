@@ -1,0 +1,21 @@
+---
+- name: Demonstrate the use of extended loop variable
+  hosts: localhost
+  tasks:
+    - name: print out the messages using extended looop variable
+      debug:
+        msg: |
+          " The loopat position {{ ansible_loop.index }}  is {{ item }}. the looop is overall {{ ansible_loop.length }} items long. The name used for the special loop variable is
+          {{ ansible_loop_var }}. the number of iterations left in the loop is {{ ansible_loop.revindex }}"
+      loop:
+        - Apple
+        - Orange
+        - Lemon
+        - Pear
+        - Melon
+        - strawberry
+        - 1
+        - 2
+        - 3
+      loop_control:
+        extended: true
