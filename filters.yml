@@ -1,0 +1,51 @@
+---
+- name: Play to demonstrate simple usage of the jsonquery filter
+  hosts:
+    - localhost
+  vars:
+    listvar1:
+      - 1
+      - 
+        - 2
+        - 3
+        - 
+          - 4
+          - 5
+          - 6
+    listvar2:
+      - this
+      - list 
+      - needs
+      - to be
+      - a string
+  vars_prompt:
+    - name: userinput
+      prompt: Provide an IP address
+      private: False
+      unsafe: true
+  
+  tasks:
+    - name: use the flatten filter on the list
+      debug:
+        msg: "{{ [1, [2,3, [4,5,6]]] | flatten }}"
+
+    - name: use the Flattten filter with a variable containing a list and register task output. 
+      debug:
+        msg: "{{ listvar1 | flatten}}"
+      register: flattened
+    
+    - name: use the intersect filter with a two lists, the first coming from the output of previous task.
+      debug:
+        msg: "{{ flattened['msg'] | intersect([1,2,3,7,9]) }}"
+
+    - name: validate the IP address provided and return one message if its valid and another if it is invalid
+      debug:
+        msg: "{{ userinput | ipaddr | ternary('The IP provided is valid', 'Invalid IP provided') }}"
+
+    - name: Takethe list in listvar2 and make it into a string
+      debug:
+        msg: "{{ listvar2 | join(' ') }}"
+
+    - name: Take the list in listvar2, shuffle it and make it into a string  
+      debug:
+        msg: "{{ listvar1 | shuffle | join(' ') }}"
