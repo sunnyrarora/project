@@ -1,0 +1,40 @@
+---
+- name: play to make use of lookups
+  hosts: localhost
+  vars:
+    choices:
+      - Take a blue pill
+      - Take a red pill
+      - Do nothing
+  tasks:
+    - name: Print out the contents of file read in
+      debug:
+        msg: "{{ lookup('file', 'files/somefile.txt') }}"
+
+    - name: Print out the contents of two files read in using a loop
+      debug:
+        msg: "{{ item }}"
+      with_file:
+        - somefile.txt
+        - someotherfile.txt
+
+    - name: Print out the contents of whichever file is found first 
+      debug:
+        msg: "{{ lookup('file', lookup('first_found', 'files/somefile.txt', 'files/someotherfile.txt'), '/etc/hosts') }}"
+
+    - name: Execute a command and use the output in a task using the lines lookup
+      debug:
+        msg: "{{ lookup('lines', 'cat /etc/hosts', 'cat /etc/motd') }}"
+
+#    - name: read in a processed Jinja2 template
+#      debug:
+#        msg: "{{ lookup('template', 'j2/sample.j2') }}"
+  
+    - name: choose a random item from a list
+      debug:
+        msg: "{{ choices }}"
+
+    - name: grab content from a url
+      debug:
+        msg: "{{ lookup('url', 'https://www.w3.org/TR/PNG/iso_8859-1.txt') }}"
+    
