@@ -1,0 +1,13 @@
+---
+- name: Play to experiment with various playbook troubleshooting senarious 
+  hosts:
+    - all
+  tasks:
+    - name: Debug task that runs at all verbosity levels
+      debug:
+        msg: "This debug task has verbosity threashold of 0"
+
+    - name: Debug task that only runs at verbosity level 2 and above
+      debug:
+        msg: "This debug task has verbosity threashold of 2"
+        verbosity: 2
