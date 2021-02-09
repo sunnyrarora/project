@@ -1,0 +1,9 @@
+default_language_version:
+  python: python3
+repos:
+- repo: https://github.com/ansible-community/ansible-lint.git
+  rev: v5.0.0a2
+  hooks:
+    - id: ansible-lint
+      pass_filenames: False
+      entry: ansible-lint -p -v --force-color
