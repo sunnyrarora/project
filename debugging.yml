@@ -1,0 +1,40 @@
+- name: Demo Debugger play
+  hosts: localhost
+  debugger: never
+  vars:
+    run_task: False
+  tasks:
+    - name: sample task one
+      command: "id"
+      when: run_task
+
+    - name: sample task two
+      debug:
+        msg: "This message ony prints if one of the tags is targetted"
+      tags:
+        - naver
+        - sometimes
+
+    - name: sample task three
+      debug:
+        msg: "{{ item }}"
+      loop:
+        - Loop item 1
+        - Loop item 2
+        - Loop item 3
+
+    - name: sample task four
+      debug:
+        msg: "print a message to console"
+      tags:
+        - always
+
+    - name: sample task five
+      debug:
+        msg: "This message only prints if the never tag is targetted"
+      tags:
+        - never
+    
+    - name: Sample task six
+      debug:
+        msg: "Print another message to the console"
